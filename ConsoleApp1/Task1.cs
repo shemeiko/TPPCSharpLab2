@@ -30,15 +30,9 @@ namespace Tasks
 
         static double[] ShiftZerosRight(double[] arr)
         {
-            int length = arr.Length;
-            double[] res = new double[length];
-
-            for (int i = 0, j = 0; i < length; ++i)
-            {
-                if (arr[i] != 0) res[j++] = arr[i];
-            }
-
-            return res;
+            return arr.Where(x => x != 0)
+              .Concat(arr.Where(x => x == 0))
+              .ToArray();
         }
 
         public static void Run()
@@ -59,7 +53,7 @@ namespace Tasks
                 arr[i] = Convert.ToInt32(Console.ReadLine());
             }
 
-            Console.WriteLine("\nMax element: {0}", arr.Max());
+            Console.WriteLine("\nMax element: {0}", arr.Max(e => Math.Abs(e)));
             Console.WriteLine("Sum between two positive nums: {0}", SumBetweenPositives(arr));
             double[] new_arr = ShiftZerosRight(arr);
             foreach (double num in new_arr)
